@@ -1,0 +1,16 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; img-src 'self' data:; frame-ancestors 'none'; object-src 'none'; base-uri 'self';
+
+/ascii_color_arts.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/styles.css
+  Cache-Control: public, max-age=86400, stale-while-revalidate=3600
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate

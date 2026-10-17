@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu Mono', monospace !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ascii-art {
+    font-family: 'Ubuntu Mono', monospace !important;
+    font-size: clamp(9px, 1.35vw, 19px);
+    line-height: 1.12;
+    white-space: pre;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "calt" 0;
+    text-align: center;
+    user-select: none;
+    margin: 0;
+    padding: 0;
+    max-width: 98vw;
+    max-height: 98vh;
+    overflow: hidden;
+    will-change: transform;
+    transform-style: preserve-3d;
+}
