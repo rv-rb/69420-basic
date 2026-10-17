@@ -9,16 +9,25 @@ window.SITE_CONFIG = {
     "fontFamily": "Ubuntu Mono",
     "lineHeight": 0.92,
     "letterSpacing": "0px",
-    "excludedFrames": [],
+    "excludedFrames": [
+        8,
+        9,
+        56,
+        58,
+        60,
+        62,
+        73,
+        94
+    ],
     "shift": {
         "enabled": true,
         "maxDisplacementX": 60,
         "maxDisplacementY": 45,
         "maxTiltX": 14,
         "maxTiltY": 18,
-        "perspective": 900,
+        "perspective": 1500,
         "inertia": 0.075,
-        "rgbSplitEnabled": true,
+        "rgbSplitEnabled": false,
         "rgbSplitIntensity": 3.5
     },
     "effects": {
@@ -46,7 +55,7 @@ window.SITE_CONFIG = {
         },
         "vignette": {
             "enabled": true,
-            "darkness": 0.85,
+            "darkness": 1,
             "spread": 45
         },
         "colorGrading": {
@@ -65,7 +74,7 @@ window.SITE_CONFIG = {
     },
     "animation": {
         "autoplay": true,
-        "intervalMs": 500,
+        "intervalMs": 1000,
         "startIndex": 0
     },
     "customPresets": {}

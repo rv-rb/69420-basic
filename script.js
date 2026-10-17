@@ -401,4 +401,19 @@
 
     applyStyles();
     requestAnimationFrame(animate);
+
+    // -------------------------------------------------------------
+    // LIVE AUTOMATED REAL-TIME SYNC FROM DEV TWEAKER
+    // -------------------------------------------------------------
+    window.addEventListener('storage', (e) => {
+        if (e.key === '69420_live_config' && e.newValue) {
+            try {
+                const liveConfig = JSON.parse(e.newValue);
+                config = deepMerge(config, liveConfig);
+                applyStyles();
+                renderArt();
+                console.log('[69420] Live-synced new configuration from Dev Tweaker!');
+            } catch (err) {}
+        }
+    });
 })();
