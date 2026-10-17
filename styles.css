@@ -1,11 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=IBM+Plex+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Space+Mono:wght@400;700&family=Ubuntu+Mono:wght@400;700&family=VT323&display=swap');
 
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Ubuntu Mono', monospace !important;
     -webkit-font-smoothing: antialiased;
+}
+
+:root {
+    --bg-color: #000000;
+    --font-family: 'Ubuntu Mono', monospace;
+    --line-height: 0.92;
+    --letter-spacing: 0px;
+    --glow-filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.4));
+    --scanline-opacity: 0;
+    --scanline-density: 3px;
+    --scanline-half: 1px;
+    --beam-opacity: 0;
+    --beam-speed: 6s;
+    --mask-opacity: 0;
+    --curvature-opacity: 0;
+    --vignette-opacity: 1;
+    --vignette-darkness: 0.85;
+    --vignette-spread: 45%;
+    --color-grade-opacity: 0;
+    --color-grade-tint: transparent;
+    --contrast: 100%;
+    --saturation: 100%;
+    --brightness: 100%;
 }
 
 html, body {
@@ -14,26 +36,147 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #000000;
+    background-color: var(--bg-color);
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    font-family: var(--font-family);
+    user-select: none;
+    transition: background-color 0.25s ease;
 }
 
+/* Stage / Viewport Container for 3D Perspective */
+#stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    perspective: 900px;
+    pointer-events: none;
+    transition: perspective 0.2s ease;
+}
+
+/* ASCII Art Element */
 #ascii-art {
-    font-family: 'Ubuntu Mono', monospace !important;
-    font-size: clamp(9px, 1.35vw, 19px);
-    line-height: 1.12;
+    margin: 0;
+    padding: 0;
     white-space: pre;
+    font-family: var(--font-family) !important;
+    line-height: var(--line-height);
+    letter-spacing: var(--letter-spacing);
     font-variant-ligatures: none;
     font-feature-settings: "liga" 0, "calt" 0;
     text-align: center;
-    user-select: none;
-    margin: 0;
-    padding: 0;
-    max-width: 98vw;
-    max-height: 98vh;
-    overflow: hidden;
-    will-change: transform;
+    will-change: transform, text-shadow, filter;
     transform-style: preserve-3d;
+    filter: var(--glow-filter) contrast(var(--contrast)) saturate(var(--saturation)) brightness(var(--brightness));
+    transition: filter 0.2s ease, line-height 0.15s ease, letter-spacing 0.15s ease;
+}
+
+/* Glitch pulse animation */
+@keyframes glitch-micro-jitter {
+    0%   { transform: translate(0, 0) skewX(0deg); }
+    20%  { transform: translate(-5px, 2px) skewX(2deg); }
+    40%  { transform: translate(6px, -3px) skewX(-2deg); }
+    60%  { transform: translate(-4px, -1px) skewY(1deg); }
+    80%  { transform: translate(3px, 2px) skewX(1deg); }
+    100% { transform: translate(0, 0) skewX(0deg); }
+}
+
+.glitch-active {
+    animation: glitch-micro-jitter 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* =========================================================
+   VISUAL FX OVERLAYS (CONTROLLED BY cfg.js)
+   ========================================================= */
+
+/* CRT Scanlines Overlay */
+#crt-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, var(--scanline-opacity)) 0px,
+        rgba(0, 0, 0, var(--scanline-opacity)) var(--scanline-half),
+        transparent var(--scanline-half),
+        transparent var(--scanline-density)
+    );
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+/* CRT Rolling Cathode Beam */
+#crt-beam {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 101;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 100%
+    );
+    height: 18%;
+    opacity: var(--beam-opacity);
+    animation: crt-beam-scroll var(--beam-speed) linear infinite;
+    transition: opacity 0.25s ease;
+}
+
+@keyframes crt-beam-scroll {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(650%); }
+}
+
+/* CRT Shadow Mask / Phosphor Grille */
+#shadow-mask-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 102;
+    background: radial-gradient(circle, rgba(255, 255, 255, var(--mask-opacity)) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+/* CRT Curved Glass Monitor Bezel */
+#crt-curvature-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 103;
+    box-shadow: inset 0 0 140px rgba(0, 0, 0, 0.95), inset 0 0 60px rgba(0, 0, 0, 1);
+    border-radius: 28px;
+    opacity: var(--curvature-opacity);
+    transition: opacity 0.25s ease;
+}
+
+/* Radial Vignette */
+#vignette-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 104;
+    background: radial-gradient(circle at center, transparent var(--vignette-spread), rgba(0, 0, 0, var(--vignette-darkness)) 100%);
+    opacity: var(--vignette-opacity);
+    transition: opacity 0.25s ease;
+}
+
+/* Color Grade Overlay */
+#color-grade-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 105;
+    opacity: var(--color-grade-opacity);
+    mix-blend-mode: color;
+    background: var(--color-grade-tint);
+    transition: opacity 0.25s ease, background 0.25s ease;
 }

@@ -6,11 +6,25 @@
     <title>69420</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=IBM+Plex+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Space+Mono:wght@400;700&family=Ubuntu+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <pre id="ascii-art" aria-label="69420 ascii art"></pre>
+    <!-- Visual Effect Overlays (Controlled by cfg.js) -->
+    <div id="crt-overlay"></div>
+    <div id="crt-beam"></div>
+    <div id="shadow-mask-overlay"></div>
+    <div id="crt-curvature-overlay"></div>
+    <div id="vignette-overlay"></div>
+    <div id="color-grade-overlay"></div>
+
+    <!-- 3D Perspective Stage -->
+    <div id="stage">
+        <pre id="ascii-art" aria-label="69420 ascii art"></pre>
+    </div>
+
+    <!-- Configuration & Scripts (Clean production, NO Dev HUD) -->
+    <script src="cfg.js"></script>
     <script src="ascii_color_arts.js"></script>
     <script src="script.js"></script>
 </body>
